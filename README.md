@@ -7,7 +7,7 @@ An open [agent skill](https://skills.sh) that gives Claude Code, Cursor, Copilot
 ## Install
 
 ```bash
-npx skills add your-username/xr-skills
+npx skills add notadonis/xr-skills
 ```
 
 Works with: Claude Code, Cursor, Windsurf, Copilot, Cline, Goose, Roo, AMP, and [all agents supported by skills.sh](https://skills.sh).
