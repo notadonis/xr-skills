@@ -1,71 +1,86 @@
 # 🥽 XR Development Skill
 
-**Full-stack AR/VR/MR/XR expertise for AI coding agents.**
+**Full-stack AR/VR/MR/XR expertise for AI coding agents — built for low-oversight execution.**
 
-An open [agent skill](https://skills.sh) that gives Claude Code, Cursor, Copilot, Windsurf, and other AI agents deep, production-tested knowledge of spatial computing — from GPU-level rendering optimization to spatial UX patterns to backend multiplayer architecture.
+An open [agent skill](https://skills.sh) that gives Claude Code, Cursor, Copilot, Windsurf,
+and other AI agents deep, production-tested knowledge of spatial computing: GPU-level
+rendering optimization, spatial UX patterns, backend multiplayer architecture, and an
+executable linter that catches the mistakes that make users physically sick.
 
 ## Install
 
-```bash
+```
 npx skills add notadonis/xr-skills
 ```
 
-Works with: Claude Code, Cursor, Windsurf, Copilot, Cline, Goose, Roo, AMP, and [all agents supported by skills.sh](https://skills.sh).
+Works with: Claude Code, Cursor, Windsurf, Copilot, Cline, Goose, Roo, AMP, and
+[all agents supported by skills.sh](https://skills.sh).
 
 ## What's Inside
 
-| File | Lines | Covers |
-|---|---|---|
-| **SKILL.md** | ~170 | Decision frameworks, non-negotiable rules, terminology, routing logic |
-| **references/platform-specs.md** | ~220 | Device specs (Quest 3, Vision Pro, PCVR, HoloLens 2, phone AR), performance budgets, OpenXR extensions, cross-platform strategy |
-| **references/frontend-engines.md** | ~370 | Unity (packages, project structure, XRI architecture, shaders, physics, audio), Unreal Engine, WebXR (Three.js, React Three Fiber), native visionOS (SwiftUI + RealityKit) |
-| **references/backend-infrastructure.md** | ~320 | Multiplayer networking (bandwidth math, pose compression, framework comparison), spatial anchor persistence, cloud rendering, CDN/asset delivery, analytics, API design, XR authentication |
-| **references/spatial-ux-design.md** | ~340 | Comfort science (exact measurements), 12 spatial UI patterns with specs, locomotion, onboarding flow, accessibility requirements |
-| **references/quality-and-security.md** | ~280 | Testing pyramid, profiling workflows, CI/CD pipelines, biometric privacy law (GDPR/BIPA), PR review checklist |
+| File | Covers |
+|---|---|
+| **SKILL.md** | Operating mode (default & declare), routing, terminology, decision frameworks, non-negotiable rules, the exit gate, freshness protocol |
+| **references/platform-specs.md** | Device specs (Quest 3/3S, Vision Pro, Galaxy XR, PCVR, HoloLens 2, phone AR), performance budgets (canonical source), OpenXR, cross-platform strategy |
+| **references/frontend-engines.md** | Unity 6 (packages, structure, XRI, shaders, physics, audio), Unreal, WebXR (Three.js, R3F), native visionOS |
+| **references/backend-infrastructure.md** | Multiplayer networking (bandwidth math, pose compression, framework comparison), anchor persistence, cloud rendering, CDN, analytics, XR auth |
+| **references/spatial-ux-design.md** | Comfort science with exact measurements, 12 spatial UI patterns, locomotion, onboarding, accessibility |
+| **references/quality-and-security.md** | Testing pyramid, profiling, CI/CD, biometric privacy law (GDPR/BIPA), store submission requirements, PR review checklist |
+| **references/task-recipes.md** | End-to-end procedures: scaffold a Quest project, scaffold WebXR, run a ship-readiness audit |
+| **scripts/xr_lint.py** | Executable static checks for XR anti-patterns. Zero dependencies. |
+
+## The Linter
+
+Prose rules get skimmed. Exit codes get obeyed.
+
+```
+python3 scripts/xr_lint.py <project-path> [--json] [--strict]
+```
+
+Scans Unity C#, scenes/prefabs, package manifests, and WebXR JS/TS for the classics:
+screen-space canvases, camera transform writes, `Time.timeScale = 0` pauses, hardcoded
+IPD, per-frame allocations, busy-waits, `requestAnimationFrame` in WebXR files, real-time
+shadows, sub-72 framerate caps, smooth-turn-only locomotion. BLOCK findings fail the run.
+Agents using this skill run it before declaring any task done.
 
 ## What It Teaches Agents
 
-After loading this skill, an AI agent can:
-
-- **Choose the right engine** for a given XR project (Unity vs. Unreal vs. WebXR vs. native visionOS)
-- **Write performant XR code** that hits framerate on Quest 3 (draw call budgets, shader rules, physics config)
-- **Design spatial interfaces** that don't cause nausea (comfort zones, text sizing, locomotion patterns)
-- **Architect multiplayer** with pose compression, spatial voice, IK avatars, and shared anchors
+- **Act without asking.** Sane defaults (Quest 3 + Unity 6 + XRI), declared assumptions, escalation only for expensive-to-reverse decisions
+- **Choose the right engine** (Unity vs. Unreal vs. WebXR vs. visionOS vs. Android XR vs. Godot)
+- **Write performant XR code** that hits framerate on standalone hardware
+- **Design spatial interfaces** that don't cause nausea
+- **Architect multiplayer** with pose compression, spatial voice, IK avatars, shared anchors
 - **Handle biometric privacy** correctly (eye tracking ≠ just another analytics signal)
-- **Review XR pull requests** against a comprehensive checklist (comfort, performance, accessibility, privacy)
-- **Scaffold projects** with correct package setup for Unity OpenXR, WebXR, or visionOS
+- **Verify their own work** against an exit gate and an executable linter before finishing
+- **Pass store review** (Meta VRCs, visionOS, Play/Android XR)
 
 ## Supported Platforms
 
-The skill covers development for:
-
 - **Meta Quest 2 / 3 / 3S** (standalone & PC Link)
 - **Apple Vision Pro** (native SwiftUI + RealityKit)
+- **Samsung Galaxy XR / Android XR** (Jetpack XR, Unity OpenXR)
 - **PC VR** (Valve Index, HTC Vive Pro 2, Bigscreen Beyond)
-- **HoloLens 2** (MRTK, enterprise AR)
-- **Magic Leap 2** (enterprise AR)
+- **HoloLens 2** / **Magic Leap 2** (enterprise AR)
 - **Phone AR** (ARKit / ARCore)
 - **WebXR** (browser-based, all devices)
 
 ## Design Principles
 
-1. **Opinionated over encyclopedic.** This skill tells agents what to do, not every possible option. When there's a best practice, it states it directly.
-
-2. **Comfort is non-negotiable.** XR is the only software domain where bad code can make users physically sick. The skill treats comfort rules as hard constraints, not suggestions.
-
-3. **Progressive disclosure.** The SKILL.md is kept under 500 lines. Detailed references load only when needed, keeping agent context windows efficient.
-
-4. **Real-world grounded.** Patterns come from shipping products, not documentation. The skill covers what actually goes wrong (thermal throttling after 15 minutes, GC spikes during physics), not just what's theoretically correct.
+1. **Opinionated over encyclopedic.** The skill tells agents what to do, not every option.
+2. **Comfort is non-negotiable.** XR is the only software domain where bad code makes users physically sick. Comfort rules are hard constraints.
+3. **Default and declare.** Agents assume a sane stack, state the assumption, and proceed. They ask only when a decision is expensive to reverse.
+4. **Executable over prose.** Rules that can be checked mechanically live in `scripts/xr_lint.py`. Agents follow exit codes better than paragraphs.
+5. **Progressive disclosure.** SKILL.md stays lean; references load on demand.
+6. **Honest about decay.** Every reference carries a `Last verified` date. Physiology is stable; SDK versions are defaults to confirm, not facts to repeat.
 
 ## Contributing
 
-Issues and PRs welcome. If you've shipped an XR product and something in here is wrong or missing, please contribute. Especially welcome:
-
-- Corrections to SDK versions or API changes
-- New device coverage (e.g., Android XR, Snapdragon XR)
+Issues and PRs welcome. Especially:
+- Corrections to SDK versions or API changes (bump the `Last verified` date with your fix)
+- New linter checks with a test fixture
+- New device coverage
 - Additional spatial UI patterns from production apps
 - Accessibility improvements
-- Non-English localization of the skill
 
 ## License
 
